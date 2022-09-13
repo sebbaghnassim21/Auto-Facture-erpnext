@@ -1,0 +1,21 @@
+if not frappe.db.get_value("Serial No", doc.serial_no, "sales_invoice"): 
+    frappe.db.set_value('Delivery Note', frappe.db.get_value("Serial No", doc.serial_no, "delivery_document_no"), "status", "Completed")
+    doc = frappe.get_doc({
+      "doctype": "Sales Invoice",
+      "customer": doc.customer_name,
+      "company":"MY ERP",
+      "taxes_and_charges":"Algeria VAT 19% - ME",
+      "taxes":[{
+          "charge_type":"On Net Total",
+          "account_head":"VAT 19% - ME",
+          "description":"VAT 19% @ 19.0",
+          "rate":19
+       }],
+      "items":[{
+      "item_code": doc.item_code,
+      "qty":1,
+      "price_list_rate":doc.taux,
+      "serial_no": doc.serial_no
+      }]
+    
+    }).insert().submit()

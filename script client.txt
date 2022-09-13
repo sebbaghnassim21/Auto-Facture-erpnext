@@ -1,0 +1,8 @@
+frappe.ui.form.on('Compte','validate', function(frm) {
+    if (frm.doc.type_de_compte==='Banque'){
+	if (frm.doc.n_de_compte_bancaire.length!=20) {
+	    msgprint('N°de compte invalid');
+	    Validate = false;
+	}
+    }
+})

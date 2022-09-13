@@ -1,0 +1,55 @@
+if  (doc.type_de_paiement=="Recevoir"): 
+    doc = frappe.get_doc({
+              "doctype": "Operations",
+              "date": doc.date,
+              "type__tiers":doc.tiers,
+              "client": doc.customer,
+              "fournisseur":doc.supplier,
+              "recettes" :doc.montant,
+              "type_op" : "Recevoir Payement",
+              "reference" : doc.name,
+              "type_op_comp":"Recettes",
+              "compte":doc.compte,
+              "compte_dest":doc.compt_dest,
+              "note":doc.note
+            }).insert().submit()
+elif  (doc.type_de_paiement=="Payer"): 
+    doc = frappe.get_doc({
+              "doctype": "Operations",
+              "date": doc.date,
+              "type__tiers":doc.tiers,
+              "client": doc.customer,
+              "fournisseur":doc.supplier,
+              "depenses" :doc.montant,
+              "type_op" : "Payer",
+              "reference" : doc.name,
+              "type_op_comp":"Dépenses",
+              "compte":doc.compte,
+              "compte_dest":doc.compt_dest,
+              "note":doc.note
+            }).insert().submit()
+elif  (doc.type_de_paiement=="Transfert interne") : 
+    d=doc.date
+    mon=doc.montant
+    ref=doc.name
+    dest=doc.compt_dest
+    doc = frappe.get_doc({
+              "doctype": "Operations",
+              "date": doc.date,
+              "depenses" :doc.montant,
+              "type_op" : "Transfert interne",
+              "reference" : doc.name,
+              "type_op_comp":"Dépenses",
+              "compte":doc.compte,
+              "compte_dest":doc.compt_dest,
+              "note":doc.note
+            }).insert().submit()
+    doc = frappe.get_doc({
+              "doctype": "Operations",
+              "date": doc.date,
+              "recettes" :mon,
+              "type_op" : "Transfert interne",
+              "reference" : ref,
+              "type_op_comp":"Recettes",
+              "compte":dest
+            }).insert().submit()

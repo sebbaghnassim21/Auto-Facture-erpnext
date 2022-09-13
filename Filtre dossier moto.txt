@@ -1,0 +1,9 @@
+frappe.ui.form.on('Dossier Moto',"onload", function(frm) {
+    frm.set_query("serial_no", function() {
+        return {
+            "filters": {
+                "status": "Delivered"
+            }
+        };
+    });
+});

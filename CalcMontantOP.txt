@@ -1,0 +1,1 @@
+doc.montant=(frappe.utils.cint(doc.recettes)-frappe.utils.cint(doc.depenses))

@@ -1,0 +1,6 @@
+frappe.ui.form.on("Customer", "prenom", function(frm) { 
+  frm.set_value("customer_name", strip(frm.doc.nom + " " + frm.doc.prenom));
+});
+frappe.ui.form.on("Customer", "nom", function(frm) { 
+  frm.set_value("customer_name", strip(frm.doc.nom + " " + frm.doc.prenom));
+});

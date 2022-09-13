@@ -1,0 +1,20 @@
+if not (doc.is_return): 
+    doc = frappe.get_doc({
+              "doctype": "Operations",
+              "date": doc.posting_date,
+              "type__tiers":"Client",
+              "client": doc.customer,
+              "depenses" :doc.base_grand_total,
+              "type_op" : "BL",
+              "reference" : doc.name
+            }).insert().submit()
+else:
+      doc = frappe.get_doc({
+              "doctype": "Operations",
+              "date": doc.posting_date,
+              "type__tiers":"Client",
+              "client": doc.customer,
+              "depenses" :doc.base_grand_total,
+              "type_op" : "BR",
+              "reference" : doc.name
+            }).insert().submit()
