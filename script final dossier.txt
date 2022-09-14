@@ -1,0 +1,38 @@
+
+frappe.ui.form.on('Dossier Moto',{onload(frm) {
+    frm.set_df_property("serial_no", "only_select", true);
+    frm.set_query("serial_no", function() {
+        return {
+            "filters": {
+                "status": "Delivered"
+               }
+            };
+    });
+    
+    
+},
+item_code(frm) {
+if (frm.doc.item_code) {
+   get_item_details(frm);
+}
+}
+});
+
+const get_item_details = (frm) => {
+    return frm.call({
+method: "erpnext.stock.get_item_details.get_item_details",
+args: {
+doc: frm.doc,
+args: {
+item_code: frm.doc.item_code,
+customer: frm.doc.customer_name,
+company: "MY ERP",
+doctype:"Quotation",
+conversion_rate: 1,
+price_list: "Vente Standard"
+}
+}
+}).then(r => {
+   frm.set_value("taux", r.message.price_list_rate);
+});
+};
